@@ -1,204 +1,146 @@
-/* =====================================================
-   GLOBAL SELECTORS
-===================================================== */
-const form = document.getElementById("myForm");
-const result = document.getElementById("result");
-const navLinks = document.querySelectorAll(".nav-links a");
-const sections = document.querySelectorAll("section");
-const header = document.querySelector(".navbar");
-
-/* =====================================================
-   HELPER FUNCTIONS
-===================================================== */
-function throttle(fn, delay) {
-  let lastTime = 0;
-  return function () {
-    const now = new Date().getTime();
-    if (now - lastTime >= delay) {
-      fn();
-      lastTime = now;
-    }
-  };
+/* =========================================
+   1. LENIS (Smooth Scroll)
+   ========================================= */
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true
+});
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
 }
+requestAnimationFrame(raf);
 
-/* =====================================================
-   FORM SUBMISSION (FRONTEND → BACKEND)
-===================================================== */
-if (form) {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+// Register GSAP Plugin
+gsap.registerPlugin(ScrollTrigger);
 
-    const nameInput = document.getElementById("name");
-    const name = nameInput.value.trim();
+/* =========================================
+   2. PRELOADER ANIMATION
+   ========================================= */
+const tl = gsap.timeline();
+let counter = { value: 0 };
 
-    if (!name) {
-      result.textContent = "❌ Please enter your name";
-      return;
+tl.to(counter, {
+    value: 100,
+    duration: 2,
+    ease: "power4.out",
+    onUpdate: () => {
+        document.querySelector(".counter").textContent = Math.round(counter.value) + "%";
     }
-
-    result.textContent = "Sending data to backend...";
-
-    try {
-      const response = await fetch("/api/form", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name })
-      });
-
-      const data = await response.json();
-
-      result.textContent = data.message;
-      nameInput.value = "";
-    } catch (error) {
-      console.error(error);
-      result.textContent = "❌ Server error";
-    }
-  });
-}
-
-/* =====================================================
-   NAVBAR ACTIVE LINK ON SCROLL
-===================================================== */
-function setActiveLink() {
-  let currentSection = "";
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 150;
-    if (window.scrollY >= sectionTop) {
-      currentSection = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === `#${currentSection}`) {
-      link.classList.add("active");
-    }
-  });
-}
-
-window.addEventListener("scroll", throttle(setActiveLink, 100));
-
-/* =====================================================
-   NAVBAR SHADOW ON SCROLL
-===================================================== */
-function handleNavbarStyle() {
-  if (window.scrollY > 20) {
-    header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.6)";
-  } else {
-    header.style.boxShadow = "none";
-  }
-}
-
-window.addEventListener("scroll", throttle(handleNavbarStyle, 50));
-
-/* =====================================================
-   SCROLL REVEAL ANIMATION (PURE JS)
-===================================================== */
-const revealElements = document.querySelectorAll(
-  ".section, .skill-card, .project-card"
-);
-
-function revealOnScroll() {
-  const windowHeight = window.innerHeight;
-
-  revealElements.forEach(el => {
-    const elementTop = el.getBoundingClientRect().top;
-
-    if (elementTop < windowHeight - 120) {
-      el.classList.add("revealed");
-    }
-  });
-}
-
-window.addEventListener("scroll", throttle(revealOnScroll, 80));
-revealOnScroll();
-
-/* =====================================================
-   SMOOTH SCROLL FOR NAV LINKS
-===================================================== */
-navLinks.forEach(link => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const targetId = link.getAttribute("href");
-    const targetSection = document.querySelector(targetId);
-
-    if (targetSection) {
-      targetSection.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
-  });
 });
 
-/* =====================================================
-   HERO TEXT TYPING EFFECT
-===================================================== */
-const heroTitle = document.querySelector(".hero h1 span");
-
-if (heroTitle) {
-  const text = heroTitle.textContent;
-  heroTitle.textContent = "";
-  let index = 0;
-
-  function typeEffect() {
-    if (index < text.length) {
-      heroTitle.textContent += text.charAt(index);
-      index++;
-      setTimeout(typeEffect, 80);
-    }
-  }
-
-  window.addEventListener("load", typeEffect);
-}
-
-/* =====================================================
-   BACK TO TOP BUTTON (DYNAMIC)
-===================================================== */
-const backToTop = document.createElement("button");
-backToTop.textContent = "↑";
-backToTop.className = "back-to-top";
-document.body.appendChild(backToTop);
-
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+tl.to(".preloader", {
+    y: "-100%",
+    duration: 1,
+    ease: "power4.inOut"
 });
 
-function toggleBackToTop() {
-  if (window.scrollY > 400) {
-    backToTop.classList.add("show");
-  } else {
-    backToTop.classList.remove("show");
-  }
+tl.from(".hero-badge", { y: 20, opacity: 0, duration: 0.5 })
+  .from(".glitch-text", { y: 50, opacity: 0, duration: 1 }, "-=0.3")
+  .from(".hero-sub", { y: 30, opacity: 0, duration: 0.8 }, "-=0.5")
+  .from(".btn-group", { y: 20, opacity: 0, duration: 0.5 }, "-=0.3");
+
+/* =========================================
+   3. TEXT DECODING (Hacker Effect)
+   ========================================= */
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function decodeText(element) {
+    let iterations = 0;
+    const originalText = element.dataset.text;
+    if(!originalText) return; 
+
+    const interval = setInterval(() => {
+        element.innerText = originalText.split("")
+            .map((letter, index) => {
+                if (index < iterations) return originalText[index];
+                return letters[Math.floor(Math.random() * 36)];
+            }).join("");
+
+        if (iterations >= originalText.length) clearInterval(interval);
+        iterations += 1 / 3;
+    }, 30);
 }
 
-window.addEventListener("scroll", throttle(toggleBackToTop, 100));
-
-/* =====================================================
-   THEME DEBUG (FUTURE EXTENSION)
-===================================================== */
-const theme = {
-  current: "dark",
-  toggle() {
-    this.current = this.current === "dark" ? "light" : "dark";
-    console.log("Theme switched to:", this.current);
-  }
+window.onload = () => {
+    const title = document.querySelector(".glitch-text");
+    if(title) setTimeout(() => decodeText(title), 2200);
 };
 
-// future use:
-// theme.toggle();
+/* =========================================
+   4. CURSOR FOLLOWER
+   ========================================= */
+const cursor = document.querySelector(".cursor");
+const follower = document.querySelector(".cursor-follower");
 
-/* =====================================================
-   PERFORMANCE LOG
-===================================================== */
-window.addEventListener("load", () => {
-  console.log("🚀 Portfolio fully loaded");
-  console.log("Sections:", sections.length);
-  console.log("Skills:", document.querySelectorAll(".skill-card").length);
+document.addEventListener("mousemove", (e) => {
+    gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+    gsap.to(follower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
 });
+
+document.querySelectorAll("a, button, .project-card, .bento-card").forEach(el => {
+    el.addEventListener("mouseenter", () => {
+        gsap.to(follower, { scale: 1.5, borderColor: "#00f2ff", duration: 0.3 });
+    });
+    el.addEventListener("mouseleave", () => {
+        gsap.to(follower, { scale: 1, borderColor: "#00f2ff", duration: 0.3 });
+    });
+});
+
+/* =========================================
+   5. BACKGROUND PARTICLES
+   ========================================= */
+tsParticles.load("particles-js", {
+    fpsLimit: 60,
+    particles: {
+        number: { value: 60, density: { enable: true, area: 800 } },
+        color: { value: "#00f2ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 2 },
+        links: { enable: true, distance: 150, color: "#00f2ff", opacity: 0.2, width: 1 },
+        move: { enable: true, speed: 1.5, direction: "none" }
+    },
+    interactivity: {
+        events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } },
+        modes: { grab: { distance: 140, links: { opacity: 1 } } }
+    }
+});
+
+/* =========================================
+   6. SCROLL ANIMATIONS
+   ========================================= */
+gsap.utils.toArray('.section').forEach(section => {
+    gsap.from(section.querySelectorAll('.bento-card, .project-card, .timeline-item'), {
+        scrollTrigger: { trigger: section, start: "top 80%" },
+        y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out"
+    });
+});
+
+/* =========================================
+   7. FORM HANDLING
+   ========================================= */
+const form = document.getElementById("contactForm");
+const result = document.getElementById("result");
+
+if (form) {
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const btn = form.querySelector("button");
+        const originalText = btn.innerText;
+        
+        btn.innerText = "TRANSMITTING...";
+        setTimeout(() => {
+            btn.innerText = "SENT";
+            result.innerText = "Message received. Initiating response protocol.";
+            result.style.color = "#00f2ff";
+            result.style.marginTop = "1rem";
+            form.reset();
+            setTimeout(() => {
+                btn.innerText = originalText;
+                result.innerText = "";
+            }, 3000);
+        }, 1500);
+    });
+}

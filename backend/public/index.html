@@ -1,160 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muhammed Adil TP</title>
-
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muhammed Adil TP </title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
-  <header class="navbar">
-    <div class="logo">Muhammed Adil TP</div>
+    <div class="preloader">
+        <div class="loader-content">
+            <div class="counter">0%</div>
+            <div class="loading-text">INITIALIZING AI SYSTEMS...</div>
+        </div>
+    </div>
 
-    <nav class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#timeline">Journey</a>
-      <a href="#contact">Contact</a>
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <div class="logo">Muhammed Adil TP</div>
+        <div class="nav-links">
+            <a href="#home" class="nav-item">Home</a>
+            <a href="#about" class="nav-item">About</a>
+            <a href="#projects" class="nav-item">Projects</a>
+            <a href="#contact" class="nav-item">Contact</a>
+        </div>
     </nav>
-  </header>
 
-  <section id="home" class="hero">
-    <h1>
-      Hi, I'm <span class="highlight">Muhammed Adil TP</span>
-    </h1>
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-badge">BCA AIML STUDENT</div>
+            <h1 class="glitch-text" data-text="Muhammed Adil TP">Muhammed Adil TP</h1>
+            <p class="hero-sub">Architecting the future with <span class="highlight">Full Stack</span> & <span class="highlight">Artificial Intelligence</span>.</p>
+            
+            <div class="btn-group">
+                <a href="#projects" class="btn primary">
+                    <span>View Projects</span>
+                    <div class="liquid"></div>
+                </a>
+                <a href="#contact" class="btn secondary">Contact Me</a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow"></div>
+        </div>
+    </section>
 
-    <p class="hero-subtitle">
-      BCA AIML Student • Full Stack Developer • 2026 Ready
-    </p>
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">WHO I AM</span>
+                <h2>Biometric Profile</h2>
+            </div>
+            
+            <div class="bento-grid">
+                <div class="bento-card large glass">
+                    <h3>About Me</h3>
+                    <p>Hi, I’m Muhammed Adil TP, a 4th-semester BCA (AI & ML) student at Presidency University, Bengaluru. I’m from Kannur, Kerala, and I’m passionate about technology, programming, and building practical solutions using AI and computing concepts.</p>
+                </div>
+                <div class="bento-card glass">
+                    <i class="fa-brands fa-node-js icon"></i>
+                    <h4>Backend</h4>
+                    <p>Node, Express, MongoDB</p>
+                </div>
+                <div class="bento-card glass">
+                    <i class="fa-brands fa-react icon"></i>
+                    <h4>Frontend</h4>
+                    <p>HTML, GSAP, React</p>
+                </div>
+                <div class="bento-card glass">
+                    <i class="fa-solid fa-brain icon"></i>
+                    <h4>AI / ML</h4>
+                    <p>Python, TensorFlow</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="hero-buttons">
-      <a href="#projects" class="btn primary">View Projects</a>
-      <a href="#contact" class="btn secondary">Contact Me</a>
-    </div>
-  </section>
+    <section id="projects" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">PORTFOLIO</span>
+                <h2>Featured Deployments</h2>
+            </div>
 
-  <section id="about" class="section">
-    <h2>About Me</h2>
+            <div class="projects-wrapper">
+                <div class="project-card glass">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop" alt="AI Form Handler">
+                    </div>
+                    <div class="card-content">
+                        <h3>AI Form Handler</h3>
+                        <p>End-to-end data flow using Fetch API & Express.</p>
+                        <div class="tech-stack">
+                            <span>Node.js</span>
+                            <span>REST API</span>
+                        </div>
+                    </div>
+                </div>
 
-    <p>
-      I am a BCA student specializing in Artificial Intelligence and
-      Machine Learning with a strong passion for full stack development.
-    </p>
+                <div class="project-card glass">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" alt="Animated Portfolio">
+                    </div>
+                    <div class="card-content">
+                        <h3>Animated Portfolio</h3>
+                        <p>High-performance GSAP animations with smooth scroll.</p>
+                        <div class="tech-stack">
+                            <span>GSAP</span>
+                            <span>WebGL</span>
+                        </div>
+                    </div>
+                </div>
 
-    <p>
-      I enjoy creating modern, scalable, and animated web applications
-      using HTML, CSS, JavaScript, Node.js, and backend technologies.
-    </p>
+                <div class="project-card glass">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop" alt="Neural Backend">
+                    </div>
+                    <div class="card-content">
+                        <h3>Neural Backend</h3>
+                        <p>Scalable API architecture designed for ML models.</p>
+                        <div class="tech-stack">
+                            <span>MongoDB</span>
+                            <span>Express</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <p>
-      My goal is to become a professional software engineer by 2026 and
-      work on impactful real-world projects.
-    </p>
-  </section>
+    <section id="timeline" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">JOURNEY</span>
+                <h2>Processing Timeline</h2>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year">2024</div>
+                    <div class="content glass">
+                        <h3>System Initialization</h3>
+                        <p>Started BCA AIML. Learned C, Python, and Logic.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2025</div>
+                    <div class="content glass">
+                        <h3>Full Stack Expansion</h3>
+                        <p>Mastered MERN Stack and UI Animation libraries.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2026</div>
+                    <div class="content glass">
+                        <h3>The Goal</h3>
+                        <p>Professional AI Engineer solving real-world problems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="skills" class="section dark">
-    <h2>Skills</h2>
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="contact-box glass">
+                <h2>Initialize Connection</h2>
+                <form id="contactForm">
+                    <div class="input-group">
+                        <input type="text" id="name" required>
+                        <label>Name</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" required>
+                        <label>Email</label>
+                    </div>
+                    <button type="submit" class="btn primary">Transmit Message</button>
+                    <p id="result"></p>
+                </form>
+            </div>
+        </div>
+    </section>
 
-    <div class="skills-grid">
-      <div class="skill-card">HTML5</div>
-      <div class="skill-card">CSS3</div>
-      <div class="skill-card">JavaScript</div>
-      <div class="skill-card">Node.js</div>
-      <div class="skill-card">Express.js</div>
-      <div class="skill-card">MongoDB</div>
-      <div class="skill-card">Git & GitHub</div>
-      <div class="skill-card">REST APIs</div>
-    </div>
-  </section>
+    <footer>
+        <p>© 2026 Muhammed Adil TP • </p>
+    </footer>
 
-  <section id="projects" class="section">
-    <h2>Projects</h2>
-
-    <div class="projects-grid">
-      <div class="project-card">
-        <h3>Full Stack Form App</h3>
-        <p>
-          End-to-end frontend to backend data flow using Fetch API and Express.
-        </p>
-      </div>
-
-      <div class="project-card">
-        <h3>Animated Portfolio</h3>
-        <p>
-          A modern portfolio website with GSAP scroll animations and clean UI.
-        </p>
-      </div>
-
-      <div class="project-card">
-        <h3>REST API Backend</h3>
-        <p>
-          Scalable backend API built with Node.js and Express.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="timeline" class="section dark">
-    <h2>My Journey</h2>
-
-    <ul class="timeline">
-      <li>
-        <span class="year">2024</span>
-        <p>Started BCA AIML and learned programming fundamentals.</p>
-      </li>
-
-      <li>
-        <span class="year">2025</span>
-        <p>Focused on frontend development and UI/UX design. </p>
-      </li>
-
-      <li>
-        <span class="year">2025</span>
-        <p>Built full stack projects with backend integration.</p>
-      </li>
-
-      <li>
-        <span class="year">2026</span>
-        <p>Targeting professional full stack & AI-powered applications.</p>
-      </li>
-    </ul>
-  </section>
-
-  <section id="contact" class="section">
-    <h2>Contact Me</h2>
-
-    <p>
-      Interested in working together or giving feedback?
-      Send a message below.
-    </p>
-
-    <form id="myForm" class="contact-form">
-      <input
-        type="text"
-        id="name"
-        placeholder="Enter your name"
-        required
-      />
-      <button type="submit">Send Message</button>
-    </form>
-
-    <p id="result" class="result"></p>
-  </section>
-
-  <footer class="footer">
-    <p>© 2026 Muhammed Adil TP</p>
-    <p>Built with HTML, CSS, JavaScript, Node.js & GSAP</p>
-  </footer>
-
-  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-  <script src="script.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
